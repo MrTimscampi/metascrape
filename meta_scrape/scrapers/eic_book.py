@@ -1,6 +1,4 @@
-import json
-import os
-
+"""Scraper for EIC-Book. Part of metascrape."""
 from yapsy.IPlugin import IPlugin
 from bs4 import BeautifulSoup
 import urllib.request
@@ -8,18 +6,21 @@ import urllib.parse
 
 
 class EICBOOK(IPlugin):
+    """EIC-Book scraping plugin."""
 
     BASE_URL = 'https://www.eic-book.com'
     SEARCH_URL = 'https://www.eic-book.com/search?q='
 
     @staticmethod
     def _is_imbd(title):
+        """Check if the title is part of the IMBD series."""
         if "imbd" in title.lower():
             return True
         else:
             return False
 
     def get_search_results(self, title):
+        """Get search results for the title passed in parameter."""
         results = []
         soup = BeautifulSoup(urllib.request.urlopen(self.SEARCH_URL +
                                                     urllib.parse.quote(title)),
@@ -45,6 +46,7 @@ class EICBOOK(IPlugin):
 
     @staticmethod
     def get_movie_information(link):
+        """Scrape the movie page for information."""
         soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
         title = soup.find("h1").get_text().replace(" [DVD]", "")\
             .replace(" [Blu-ray]", "").replace("　", " ")

@@ -21,12 +21,18 @@ class EICBOOK(IPlugin):
 
     def get_search_results(self, title):
         results = []
-        soup = BeautifulSoup(urllib.request.urlopen(self.SEARCH_URL + urllib.parse.quote(title)), "html.parser")
+        soup = BeautifulSoup(urllib.request.urlopen(self.SEARCH_URL +
+                                                    urllib.parse.quote(title)),
+                             "html.parser")
         result_list = soup.find_all("div", class_="list")
         if self._is_imbd(title):
             for result in result_list:
-                _title = result.find("h2").get_text().split('\n', 1)[0].replace(" [Blu-ray]", "")
-                soup = BeautifulSoup(urllib.request.urlopen(self.SEARCH_URL + urllib.parse.quote(_title)), "html.parser")
+                _title = result.find("h2").get_text().split('\n', 1)[0]\
+                    .replace(" [Blu-ray]", "")
+                soup = BeautifulSoup(urllib.request.urlopen(self.SEARCH_URL +
+                                                            urllib.parse
+                                                            .quote(_title)),
+                                     "html.parser")
                 _result_list = soup.find_all("div", class_="list")
                 for _result in _result_list:
                     link = self.BASE_URL + _result.find("a").get('href')
@@ -40,9 +46,11 @@ class EICBOOK(IPlugin):
     @staticmethod
     def get_movie_information(link):
         soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
-        title = soup.find("h1").get_text().replace(" [DVD]", "").replace(" [Blu-ray]", "").replace("　", " ")
+        title = soup.find("h1").get_text().replace(" [DVD]", "")\
+            .replace(" [Blu-ray]", "").replace("　", " ")
         poster = soup.find(class_="dtMainPic").get('href')
-        info_table = soup.find("div", attrs={"id": "dtSpecR"}).find("table").find_all("tr")
+        info_table = soup.find("div", attrs={"id": "dtSpecR"}).find("table")\
+            .find_all("tr")
         for row in info_table:
             header = row.find("th").get_text()
             # FIXME: Is there a better way to do this than with 5 conditions ?

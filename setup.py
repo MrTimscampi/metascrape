@@ -1,6 +1,4 @@
-"""
-A headless metadata scraper for media.
-"""
+"""A headless metadata scraper for media."""
 from setuptools import find_packages, setup
 
 dependencies = ['click', 'yapsy', 'bs4']

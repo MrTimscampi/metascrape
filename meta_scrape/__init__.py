@@ -1,3 +1,4 @@
+"""A headless metadata scraper for media."""
 import os
 
 from yapsy.PluginManager import PluginManagerSingleton

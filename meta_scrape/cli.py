@@ -1,3 +1,4 @@
+"""Entry-point for metascrape."""
 import click
 
 from . import SCRAPER_MANAGER, SCRAPERS_DIRECTORY, VERSION, scrape

@@ -1,3 +1,4 @@
+"""Metascrape subcommand for scraping files and folders."""
 import os
 import xml.etree.cElementTree as ET
 

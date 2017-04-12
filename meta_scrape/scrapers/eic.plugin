@@ -1,0 +1,9 @@
+[Core]
+Name = EIC-Book/EIC-AV
+Module = eic
+
+[Documentation]
+Author = MrTimscampi
+Version = 0.1
+Website =
+Description = Scraper for the EIC-Book and EIC-AV websites.

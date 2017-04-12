@@ -1,9 +1,0 @@
-[Core]
-Name = EIC-Book
-Module = eic_book
-
-[Documentation]
-Author = MrTimscampi
-Version = 0.1
-Website =
-Description = Scraper for the EIC-Book website.

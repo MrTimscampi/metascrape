@@ -1,10 +1,14 @@
 """Metascrape subcommand for scraping files and folders."""
 import os
+import io
+import urllib.request
 import xml.etree.cElementTree as ET
 
 import click
+from PIL import Image
 
 from meta_scrape import SCRAPER_MANAGER
+from meta_scrape.utils import crop_poster
 
 
 @click.command()
@@ -49,7 +53,9 @@ def scrape(title, path):
                 link = search_results[value]['link']
             information = plugin.plugin_object.get_movie_information(link)
         if information:
-            write_kodi_nfo(information, path)
+            _write_kodi_nfo(information, path)
+            _write_poster(information, path)
+            _write_fanart(information, path)
             click.echo("Scraped {0} as {1}.".format(title, information.get("title")))
         else:
             click.echo("No match found.")
@@ -57,7 +63,7 @@ def scrape(title, path):
         click.secho("  No scrapers found.", fg="red")
 
 
-def write_kodi_nfo(information, path):
+def _write_kodi_nfo(information, path):
     """Write the provided information to movie.nfo."""
     click.echo("Writing movie.nfo...")
     root = ET.Element("movie")
@@ -70,3 +76,35 @@ def write_kodi_nfo(information, path):
     ET.SubElement(root, "studio").text = information.get("studio")
     tree = ET.ElementTree(root)
     tree.write(os.path.join(path, "movie.nfo"), encoding="UTF-8")
+
+
+def _write_poster(information, path):
+    # TODO: Detect poster format
+    # TODO: Crop poster automatically
+    cover = Image.open(io.BytesIO(urllib.request.urlopen(information.get("poster")).read()))
+    cover_width, cover_height = cover.size
+    if cover_width > cover_height:
+        cover = crop_poster(cover)
+    else:
+        # This is already in the expected format
+        pass
+    click.echo("Writing poster...")
+    cover.save(os.path.join(path, "folder.jpg"))
+    cover.save(os.path.join(path, "poster.jpg"))
+    cover.close()
+
+
+def _write_fanart(information, path):
+    # TODO: Detect fanart format
+    # TODO: Handle cases where fanart isn't the same source as poster
+    cover = Image.open(io.BytesIO(urllib.request.urlopen(information.get("poster")).read()))
+    cover_width, cover_height = cover.size
+    if cover_width > cover_height:
+        # This should be the whole cover
+        pass
+    else:
+        # This is a poster
+        pass
+    click.echo("Writing fanart...")
+    cover.save(os.path.join(path, "fanart.jpg"))
+    cover.close()

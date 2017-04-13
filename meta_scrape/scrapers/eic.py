@@ -7,9 +7,10 @@ import urllib.parse
 
 class EIC(IPlugin):
     """EIC scraping plugin.
-    
+
     This plugin scrapes information from EIC-Book and EIC-AV.
-    Returns a list of results."""
+    Returns a list of results.
+    """
 
     EIC_BOOK_BASE_URL = 'https://www.eic-book.com'
     EIC_AV_BASE_URL = 'https://www.eic-av.com'
@@ -37,13 +38,15 @@ class EIC(IPlugin):
                 # TODO: Clean titles in a more generic fashion
                 _title = result.find("h2").get_text().split('\n', 1)[0] \
                     .replace(" [Blu-ray]", "")
-                soup = BeautifulSoup(urllib.request.urlopen(self.EIC_BOOK_SEARCH_URL +
-                                                            urllib.parse
-                                                            .quote(_title)),
-                                     "html.parser")
+                soup = BeautifulSoup(urllib.request.urlopen(
+                    self.EIC_BOOK_SEARCH_URL +
+                    urllib.parse.quote(_title)),
+                    "html.parser")
                 for _result in soup.find_all("div", class_="list"):
-                    result_title = _result.find("h2").get_text().split('\n', 1)[0]
-                    link = self.EIC_BOOK_BASE_URL + _result.find("a").get('href')
+                    result_title = _result.find("h2") \
+                        .get_text().split('\n', 1)[0]
+                    link = self.EIC_BOOK_BASE_URL +\
+                        _result.find("a").get('href')
                     self.results.append({"title": result_title, "link": link})
         else:
             for result in result_list:
@@ -60,12 +63,13 @@ class EIC(IPlugin):
                 # TODO: Clean titles in a more generic fashion
                 _title = result.find("h2").get_text().split('\n', 1)[0] \
                     .replace(" [Blu-ray]", "")
-                soup = BeautifulSoup(urllib.request.urlopen(self.EIC_AV_SEARCH_URL +
-                                                            urllib.parse
-                                                            .quote(_title)),
-                                     "html.parser")
+                soup = BeautifulSoup(urllib.request.urlopen(
+                    self.EIC_AV_SEARCH_URL +
+                    urllib.parse.quote(_title)),
+                    "html.parser")
                 for _result in soup.find_all("div", class_="list"):
-                    result_title = _result.find("h2").get_text().split('\n', 1)[0]
+                    result_title = _result.find("h2") \
+                        .get_text().split('\n', 1)[0]
                     link = self.EIC_AV_BASE_URL + _result.find("a").get('href')
                     self.results.append({"title": result_title, "link": link})
         else:
@@ -91,7 +95,7 @@ class EIC(IPlugin):
             # No poster exists
             poster = None
 
-        info_table = soup.find("div", attrs={"id": "dtSpecR"}).find("table")\
+        info_table = soup.find("div", attrs={"id": "dtSpecR"}).find("table") \
             .find_all("tr")
         for row in info_table:
             header = row.find("th").get_text()

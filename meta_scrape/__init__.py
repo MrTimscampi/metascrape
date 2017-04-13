@@ -14,7 +14,8 @@ SCRAPERS_DIRECTORY = os.path.join(os.path.abspath(os.path.dirname(__file__)),
 SCRAPER_MANAGER = PluginManagerSingleton.get()
 
 APPLICATION_DIRECTORIES = AppDirs("metascrape", "metascrape")
-PRESETS_FILE = os.path.join(APPLICATION_DIRECTORIES.user_config_dir, "presets.yml")
+PRESETS_FILE = os.path.join(APPLICATION_DIRECTORIES.user_config_dir,
+                            "presets.yml")
 
 # Make the configuration directory and copy config files
 os.makedirs(APPLICATION_DIRECTORIES.user_config_dir, exist_ok=True)

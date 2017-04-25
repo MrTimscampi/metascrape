@@ -22,6 +22,13 @@ This is alpha software. Use at your own risks.
 
 # Installation
 
+### Packages
+
+| Distribution | Package              |
+|--------------|----------------------|
+| Arch Linux   | metascrape-git (AUR) |
+
+### From source
 Clone the repository and install using `pip` run:
 
     $ git clone https://github.com/MrTimscampi/metascrape.git

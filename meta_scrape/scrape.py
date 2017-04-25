@@ -39,7 +39,7 @@ def scrape(title, path):
                            .format(plugin.name))
                 continue
             elif len(search_results) == 1:
-                link = search_results[0]
+                link = search_results[0]['link']
                 click.echo("Found a match at: {0}".format(link))
             else:
                 click.echo("Multiple matches have been found by the {0} "

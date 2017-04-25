@@ -12,8 +12,15 @@ setup(
     author_email='julien.machiels@std.heh.be',
     description='A headless metadata scraper for media.',
     long_description=__doc__,
-    packages=find_packages(exclude=['tests']),
+    packages=[
+        'meta_scrape',
+        'meta_scrape.scrapers'
+    ],
     include_package_data=True,
+    package_data={
+        'meta_scrape': ['*.yml'],
+        'meta_scrape.scrapers': ['*.plugin']
+    },
     zip_safe=False,
     platforms='any',
     install_requires=dependencies,

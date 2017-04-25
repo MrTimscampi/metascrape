@@ -2,28 +2,29 @@
 
 A headless metadata scraper for media.
 
+# Features
 
-# Status
+This is alpha software. Use at your own risks.
 
-This is alpha software.  
-For now, it does not provide much verification for anything and features are very limited.
+* List available scrapers
+* Fetch and crop posters
+* Scrape basic information from one source
 
-Currently available scrapers are:
+### Available scrapers:
 
-* EIC-Book
+* EIC-Book/EIC-AV
 
+# Future plans
+
+* Ability to aggregate information from multiple scrapers
+* Preset support for cover cropping
+* More scrapers
 
 # Installation
 
-If you don't use `pipsi`, you're missing out.
-Here are [installation instructions](https://github.com/mitsuhiko/pipsi#readme).
+Clone the repository and install using `pip` run:
 
-Simply run:
-
-    $ pipsi install .
-
-If you're using the regular `pip`, run:
-
+    $ git clone https://github.com/MrTimscampi/metascrape.git
     $ pip install .
 
 
@@ -32,4 +33,3 @@ If you're using the regular `pip`, run:
 You can find out about the various options and sub-commands by running:
 
     $ metascrape --help
-

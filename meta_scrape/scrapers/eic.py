@@ -78,7 +78,7 @@ class EIC(IPlugin):
             for result in result_list:
                 result_title = result.find("h2") \
                     .get_text().split('\n', 1)[0]
-                link = self.EIC_BOOK_BASE_URL + result.find("a").get('href')
+                link = self.EIC_AV_BASE_URL + result.find("a").get('href')
                 self.results.append({"title": result_title, "link": link})
 
     def get_search_results(self, title):

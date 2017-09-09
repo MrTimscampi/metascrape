@@ -1,0 +1,31 @@
+#compdef metascrape
+
+# zsh completion for metascrape metadata scraper: https://github.com/MrTimscampi/metascrape/
+
+function _metascrape {
+	local line
+
+	_arguments -C \
+		"--h[Show help information]" \
+		"1: :(list-scrapers scrape)"\
+		"*::args:->args"
+
+	case $line[1] in
+		list-scrapers)
+			_metascrape_list_scrapers
+		;;
+		scrape)
+			_metascrape_scrape
+		;;
+	esac
+}
+
+function _metascrape_list_scrapers {
+
+}
+
+function _metascrape_scrape {
+	_arguments \
+		"-t[Title to use as search string]" \
+		"--title[Title to use as search string]"
+}

@@ -3,6 +3,7 @@ from yapsy.IPlugin import IPlugin
 from bs4 import BeautifulSoup
 import urllib.request
 import urllib.parse
+from meta_scrape.utils import clean_title
 
 
 class EIC(IPlugin):
@@ -21,8 +22,7 @@ class EIC(IPlugin):
     @staticmethod
     def _has_multiple_formats(title):
         """Check if the title is part of the IMBD series."""
-        # TODO: Make this universal. If the title returns more than one result,
-        # return true, otherwise, return alse.
+        # TODO: Make this universal.
         if "imbd" in title.lower():
             return True
         else:
@@ -36,8 +36,7 @@ class EIC(IPlugin):
         if self._has_multiple_formats(title):
             for result in result_list:
                 # TODO: Clean titles in a more generic fashion
-                _title = result.find("h2").get_text().split('\n', 1)[0] \
-                    .replace(" [Blu-ray]", "")
+                _title = clean_title(result.find("h2").get_text().split('\n', 1)[0])
                 soup = BeautifulSoup(urllib.request.urlopen(
                     self.EIC_BOOK_SEARCH_URL +
                     urllib.parse.quote(_title)),
@@ -63,8 +62,7 @@ class EIC(IPlugin):
         if self._has_multiple_formats(title):
             for result in result_list:
                 # TODO: Clean titles in a more generic fashion
-                _title = result.find("h2").get_text().split('\n', 1)[0] \
-                    .replace(" [Blu-ray]", "")
+                _title = clean_title(result.find("h2").get_text().split('\n', 1)[0])
                 soup = BeautifulSoup(urllib.request.urlopen(
                     self.EIC_AV_SEARCH_URL +
                     urllib.parse.quote(_title)),
@@ -91,8 +89,7 @@ class EIC(IPlugin):
     def get_movie_information(link):
         """Scrape the movie page for information."""
         soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
-        title = soup.find("h1").get_text().replace(" [DVD]", "")\
-            .replace(" [Blu-ray]", "").replace("　", " ")
+        title = clean_title(soup.find("h1").get_text())
         try:
             poster = soup.find(class_="dtMainPic").get('href')
         except AttributeError:
@@ -105,7 +102,7 @@ class EIC(IPlugin):
             header = row.find("th").get_text()
             # FIXME: Is there a better way to do this than with 5 conditions ?
             if header == "メディア":
-                format = row.find("td").get_text().replace("\n", "")
+                movie_format = row.find("td").get_text().replace("\n", "")
                 continue
             elif header == "出演者":
                 actors = []
@@ -132,7 +129,7 @@ class EIC(IPlugin):
             "title": title,
             "poster": poster,
             "actors": actors,
-            "format": format,
+            "format": movie_format,
             "release_date": release_date,
             "studio": maker,
             "set": set,

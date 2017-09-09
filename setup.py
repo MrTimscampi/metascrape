@@ -1,7 +1,7 @@
 """A headless metadata scraper for media."""
 from setuptools import find_packages, setup
 
-dependencies = ['click', 'yapsy', 'bs4', 'Pillow', 'appdirs', 'pyyaml']
+dependencies = ['click', 'yapsy', 'beautifulsoup4', 'Pillow', 'appdirs', 'pyyaml']
 
 setup(
     name='metascrape',

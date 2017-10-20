@@ -15,7 +15,9 @@ def clean_title(title):
         " [Blu-ray]": "",
         "　": " ",
         " Blu-ray版": "",
-        " DVD版": ""
+        " DVD版": "",
+        " 【特価】": "",
+        "【10%POINTBACK】": ""
     }
     substrings = sorted(replacement_map, key=lambda k: len(k), reverse=True)
     regexp = re.compile('|'.join(map(re.escape, substrings)))

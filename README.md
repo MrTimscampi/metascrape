@@ -1,5 +1,7 @@
 # Meta Scrape
 
+[![Travis](https://img.shields.io/travis/MrTimscampi/metascrape.svg)](https://travis-ci.org/MrTimscampi/metascrape) 
+
 A headless metadata scraper for media.
 
 # Features

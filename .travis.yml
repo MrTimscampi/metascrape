@@ -1,11 +1,19 @@
-sudo: false
 language: python
 
-python:
-- '3.6'
-- '3.6-dev'
-- '3.7-dev'
-- 'pypy'
+matrix:
+  include:
+    - python: "3.6"
+      env: TOXENV=py36
+      os:
+        - linux
+        - osx
+    - python: "3.7-dev"
+      env: TOXENV=py37
+      os:
+        - linux
+        - osx
+    - python: "3.6"
+      env: TOXENV=cover
 
 addons:
   sonarcloud:
@@ -18,8 +26,8 @@ script:
   - tox
   - sonar-scanner
 
-after_success:
-  - coveralls
+after_success: |
+  if [ "$TOXENV" == "cover" ]; then coveralls; fi;
 
 deploy:
   provider: releases
@@ -27,3 +35,5 @@ deploy:
     secure: JRGPq74zBteiRbnKxVet1dsCoue0z6lyGvQkLbVsTaAj8QCwupfQUlD3LTVnIZGa7K2GDnSyrx4rhv+y2rUyJPumMnXp0BGzOKb5nCz8BnQohKYvKpTHoZ31s3aRX03uC5FgIJo6wuGkDiDV3R91Pt0DJgXJhbagCB8gR91IUsAgkY8UKqbd1ANZAA26EQYwPzBG8QiuHoGhjTDIMu8Uxn9zpjfbB2vJN/AQz0JkPjsluXPXPpTnWpJSfsSeobogxx66ZxKJUazECTxhZ4gKu8TK67nr0w5I44tBL2CvNmBZNRoNeZFPEgd+zEdoGc9HBUPKiep6g5ObM+sGbNaIjRm87RrrAWHCwOAI+q8c9zAcUrMjCuwTI95e8FZRk2nT7QEmb0N0ENKNvsR6D80u98BVpxN6PezGrRMMxGgQ+qEMneO8xPqZK0Jp6JAPidom+tc9JEbfeRRAO1V5GSTsthgg/OG/257dlIqKX6hStNVzgsWXSbO9Tte4tijPJKE++cvyjjW0hlLSAs8pwomV36zAMOQl6KCnU+Q7q8TYjf7stuDKUgNA8RdaPaMfhgOTDW6QHw0aK4Bf3sgFZXhMZvsSjHFAvfQPe+nYj6BQvQHANIkb3+7QAIhzK5gYVYDuLJyI09X5gvWwTJ/MGyVqF8QSNX0/bJ4aAPZ0o+r/sx0=
   on:
     tags: true
+
+sudo: false

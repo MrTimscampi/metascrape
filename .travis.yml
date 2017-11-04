@@ -4,14 +4,16 @@ matrix:
   include:
     - python: "3.6"
       env: TOXENV=py36
-      os:
-        - linux
-        - osx
+      os: linux
+    - python: "3.6"
+      env: TOXENV=py36
+      os: osx
     - python: "3.7-dev"
       env: TOXENV=py37
-      os:
-        - linux
-        - osx
+      os: linux
+    - python: "3.7-dev"
+      env: TOXENV=py37
+      os: osx
     - python: "3.6"
       env: TOXENV=cover
 

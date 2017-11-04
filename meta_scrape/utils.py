@@ -11,7 +11,7 @@ def crop_poster(image):
 def clean_title(title):
     """Removes format information from the title."""
     replacement_map = {
-        " [DVD": "",
+        " [DVD]": "",
         " [Blu-ray]": "",
         "　": " ",
         " Blu-ray版": "",

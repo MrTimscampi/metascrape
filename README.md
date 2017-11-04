@@ -1,6 +1,10 @@
 # Meta Scrape
 
-[![Travis](https://img.shields.io/travis/MrTimscampi/metascrape.svg)](https://travis-ci.org/MrTimscampi/metascrape) 
+[![Travis](https://img.shields.io/travis/MrTimscampi/metascrape.svg?label=travis)](https://travis-ci.org/MrTimscampi/metascrape) [![AppVeyor](https://img.shields.io/appveyor/ci/mrtimscampi/metascrape.svg?label=appveyor)](https://ci.appveyor.com/project/MrTimscampi/metascrape) [![Coveralls github](https://img.shields.io/coveralls/github/MrTimscampi/metascrape.svg)](https://coveralls.io/github/MrTimscampi/metascrape) [![Requires.io](https://img.shields.io/requires/github/MrTimscampi/metascrape.svg)](https://requires.io/github/MrTimscampi/metascrape/requirements/?branch=master)
+
+[![AUR](https://img.shields.io/aur/version/metascrape-git.svg)](https://aur.archlinux.org/packages/metascrape-git/)
+
+[![license](https://img.shields.io/github/license/mrtimscampi/metascrape.svg)](https://github.com/MrTimscampi/metascrape/blob/master/LICENSE)
 
 A headless metadata scraper for media.
 

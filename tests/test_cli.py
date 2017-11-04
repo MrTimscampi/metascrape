@@ -19,6 +19,7 @@ def test_cli_with_arg(runner):
     assert result.exit_code == 0
     assert not result.exception
 
+
 def test_eic_scrapper_detected(runner):
     result = runner.invoke(cli.main, ['list-scrapers'])
     assert "EIC-Book" in result.output.strip()

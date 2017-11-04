@@ -2,7 +2,6 @@
 import os
 from shutil import copyfile
 
-import sys
 from appdirs import AppDirs
 import yaml
 

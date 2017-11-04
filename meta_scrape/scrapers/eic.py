@@ -36,7 +36,9 @@ class EIC(IPlugin):
         if self._has_multiple_formats(title):
             for result in result_list:
                 # TODO: Clean titles in a more generic fashion
-                _title = clean_title(result.find("h2").get_text().split('\n', 1)[0])
+                _title = clean_title(result.find("h2")
+                                     .get_text()
+                                     .split('\n', 1)[0])
                 soup = BeautifulSoup(urllib.request.urlopen(
                     self.EIC_BOOK_SEARCH_URL +
                     urllib.parse.quote(_title)),
@@ -62,7 +64,9 @@ class EIC(IPlugin):
         if self._has_multiple_formats(title):
             for result in result_list:
                 # TODO: Clean titles in a more generic fashion
-                _title = clean_title(result.find("h2").get_text().split('\n', 1)[0])
+                _title = clean_title(result.find("h2")
+                                     .get_text()
+                                     .split('\n', 1)[0])
                 soup = BeautifulSoup(urllib.request.urlopen(
                     self.EIC_AV_SEARCH_URL +
                     urllib.parse.quote(_title)),

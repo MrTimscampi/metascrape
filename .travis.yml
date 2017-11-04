@@ -1,16 +1,28 @@
 sudo: false
 language: python
+
 python:
 - '3.6'
 - '3.6-dev'
 - '3.7-dev'
+- 'pypy'
+
 addons:
   sonarcloud:
     organization: mrtimscampi-github
-install: pip install tox-travis
+
+install:
+  - pip install tox-travis coveralls
+
 script:
-- tox
-- sonar-scanner
+  - tox
+  - sonar-scanner
+  - coverage run --source meta_scrape -m py.test
+  - coverage report -m
+
+after_success:
+  - coveralls
+
 deploy:
   provider: releases
   api_key:

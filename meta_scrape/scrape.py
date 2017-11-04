@@ -2,7 +2,7 @@
 import os
 import io
 import urllib.request
-import xml.etree.cElementTree as ET
+from xml.etree.cElementTree import Element, SubElement, ElementTree
 
 import click
 from PIL import Image
@@ -67,15 +67,15 @@ def scrape(title, path):
 def _write_kodi_nfo(information, path):
     """Write the provided information to movie.nfo."""
     click.echo("Writing movie.nfo...")
-    root = ET.Element("movie")
-    ET.SubElement(root, "title").text = information.get("title")
-    ET.SubElement(root, "originaltitle").text = information.get("title")
-    ET.SubElement(root, "sorttitle").text = information.get("title")
-    ET.SubElement(root, "set").text = information.get("set")
-    ET.SubElement(root, "year").text = information.get("release_date")[:4]
-    ET.SubElement(root, "plot").text = information.get("plot")
-    ET.SubElement(root, "studio").text = information.get("studio")
-    tree = ET.ElementTree(root)
+    root = Element("movie")
+    SubElement(root, "title").text = information.get("title")
+    SubElement(root, "originaltitle").text = information.get("title")
+    SubElement(root, "sorttitle").text = information.get("title")
+    SubElement(root, "set").text = information.get("set")
+    SubElement(root, "year").text = information.get("release_date")[:4]
+    SubElement(root, "plot").text = information.get("plot")
+    SubElement(root, "studio").text = information.get("studio")
+    tree = ElementTree(root)
     tree.write(os.path.join(path, "movie.nfo"), encoding="UTF-8")
 
 

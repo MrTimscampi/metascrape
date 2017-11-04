@@ -18,7 +18,7 @@ install:
   - python --version
   - python -m pip install --upgrade pip setuptools wheel
   - pip --version
-  - "%PYTHON%\\python.exe -m pip install tox"
+  - pip install tox
 
 test_script:
   - tox -e %TOXENV%"

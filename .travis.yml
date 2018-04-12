@@ -22,7 +22,7 @@ addons:
 
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python3; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade python; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p python3; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
 
@@ -37,10 +37,18 @@ after_success: |
   if [ "$TOXENV" == "cover" ]; then coveralls; fi;
 
 deploy:
-  provider: releases
-  api_key:
-    secure: JRGPq74zBteiRbnKxVet1dsCoue0z6lyGvQkLbVsTaAj8QCwupfQUlD3LTVnIZGa7K2GDnSyrx4rhv+y2rUyJPumMnXp0BGzOKb5nCz8BnQohKYvKpTHoZ31s3aRX03uC5FgIJo6wuGkDiDV3R91Pt0DJgXJhbagCB8gR91IUsAgkY8UKqbd1ANZAA26EQYwPzBG8QiuHoGhjTDIMu8Uxn9zpjfbB2vJN/AQz0JkPjsluXPXPpTnWpJSfsSeobogxx66ZxKJUazECTxhZ4gKu8TK67nr0w5I44tBL2CvNmBZNRoNeZFPEgd+zEdoGc9HBUPKiep6g5ObM+sGbNaIjRm87RrrAWHCwOAI+q8c9zAcUrMjCuwTI95e8FZRk2nT7QEmb0N0ENKNvsR6D80u98BVpxN6PezGrRMMxGgQ+qEMneO8xPqZK0Jp6JAPidom+tc9JEbfeRRAO1V5GSTsthgg/OG/257dlIqKX6hStNVzgsWXSbO9Tte4tijPJKE++cvyjjW0hlLSAs8pwomV36zAMOQl6KCnU+Q7q8TYjf7stuDKUgNA8RdaPaMfhgOTDW6QHw0aK4Bf3sgFZXhMZvsSjHFAvfQPe+nYj6BQvQHANIkb3+7QAIhzK5gYVYDuLJyI09X5gvWwTJ/MGyVqF8QSNX0/bJ4aAPZ0o+r/sx0=
-  on:
-    tags: true
+  - provider: releases
+    api_key:
+      secure: "JRGPq74zBteiRbnKxVet1dsCoue0z6lyGvQkLbVsTaAj8QCwupfQUlD3LTVnIZGa7K2GDnSyrx4rhv+y2rUyJPumMnXp0BGzOKb5nCz8BnQohKYvKpTHoZ31s3aRX03uC5FgIJo6wuGkDiDV3R91Pt0DJgXJhbagCB8gR91IUsAgkY8UKqbd1ANZAA26EQYwPzBG8QiuHoGhjTDIMu8Uxn9zpjfbB2vJN/AQz0JkPjsluXPXPpTnWpJSfsSeobogxx66ZxKJUazECTxhZ4gKu8TK67nr0w5I44tBL2CvNmBZNRoNeZFPEgd+zEdoGc9HBUPKiep6g5ObM+sGbNaIjRm87RrrAWHCwOAI+q8c9zAcUrMjCuwTI95e8FZRk2nT7QEmb0N0ENKNvsR6D80u98BVpxN6PezGrRMMxGgQ+qEMneO8xPqZK0Jp6JAPidom+tc9JEbfeRRAO1V5GSTsthgg/OG/257dlIqKX6hStNVzgsWXSbO9Tte4tijPJKE++cvyjjW0hlLSAs8pwomV36zAMOQl6KCnU+Q7q8TYjf7stuDKUgNA8RdaPaMfhgOTDW6QHw0aK4Bf3sgFZXhMZvsSjHFAvfQPe+nYj6BQvQHANIkb3+7QAIhzK5gYVYDuLJyI09X5gvWwTJ/MGyVqF8QSNX0/bJ4aAPZ0o+r/sx0="
+    on:
+      tags: true
+      branch: master
+  - provider: pypi
+    user: mrtimscampi
+    password:
+      secure: "qgAQViAwYOdK/X5V6F7HEx3d7Awnu8PV1pkfPZCl3r1mREHtTFTVgiHjWpl13i5QE3PdWCkrqoq0bpkY4RCk4zZFj7bQgLL5qjKzYn3ERmTrukvcXPetZJX1BCPp5dQvcBoVbK9gGVPKnXloYo9qBXzyol1mDzHd5pAYqBRnEOdhUVnn621+6/UhFSfduafVgKvYe1YQMu3zQP5OtaKggGm7Bqlnb9r1Gc+fSWl6UF9JYrjro2YEnjVC4i2NortKzBnSN4R6aCFGRrxKrFM85YznvfJ4TlRMM3KQcwPaaViOgdCfvxRuTcFWlgvVyrMptd2xlzPus4B4QXVPC762TaiHHeiMdKPEFFnCopnnXLhuq8DHXNXyuIczMcyEOqad7eRtQFDFEmleWHM3rVzXzJvJvSTQPXfAYHrUdyHcz2yLep/PEHA8JywQ3a/WrHpfz9oW4x9rKtiCs4tpPqbLGk2lMlW/Vlff5DcntCnmwemMGupdsSWCWSmoqqIfYXxNab0tsM2QLv0mTM4IX+qlgzIzmwOQxseFUnpxTPOW01GJuAtwQgMnRoQuVClXXNfSfsWydXndTo99sQuGVZABs3BucOkT3ZVui9cwJB5EPKM3yVvp5sm6God5tqUU5GhR6qrTLAM5/W/5eOsRzTJVbok1sOjnjcgMo6gLGHeRLgU="
+    on:
+      tags: true
+      branch: master
 
 sudo: false

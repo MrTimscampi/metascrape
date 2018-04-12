@@ -7,7 +7,7 @@ from xml.etree.cElementTree import Element, SubElement, ElementTree
 import click
 from PIL import Image
 
-from meta_scrape import SCRAPER_MANAGER
+from meta_scrape import SCRAPER_MANAGER, CONFIG
 from meta_scrape.utils import crop_poster
 
 
@@ -30,6 +30,7 @@ def scrape(title, path):
             title = os.path.basename(os.path.normpath(path))
 
         click.echo("Scraping for title: {0}".format(title))
+        information = dict()
         for plugin in SCRAPER_MANAGER.getAllPlugins():
             click.echo("Searching for movie using the {0} scraper"
                        .format(plugin.name))
@@ -51,17 +52,31 @@ def scrape(title, path):
                                      'of the link to use',
                                      default=0)
                 link = search_results[value]['link']
-            information = plugin.plugin_object.get_movie_information(link)
+            information[plugin.name] = plugin.plugin_object.get_movie_information(link)
         if information:
-            _write_kodi_nfo(information, path)
-            _write_poster(information, path)
-            _write_fanart(information, path)
+            merged_information = _merge_results(information)
+            _write_kodi_nfo(merged_information, path)
+            _write_poster(merged_information, path)
+            _write_fanart(merged_information, path)
             click.echo("Scraped {0} as {1}.".format(title,
-                                                    information.get("title")))
+                                                    merged_information.get("title")))
         else:
             click.echo("No match found.")
     else:
         click.secho("  No scrapers found.", fg="red")
+
+
+def _merge_results(information):
+    merged_information = dict()
+    for field in CONFIG.get('priority'):
+        for field_name, scraper_list in field.items():
+            for scraper in scraper_list:
+                if information.get(scraper).get(field_name) is None:
+                    continue
+                else:
+                    click.echo(information.get(scraper).get(field_name))
+                    merged_information[field_name] = information.get(scraper).get(field_name)
+    return merged_information
 
 
 def _write_kodi_nfo(information, path):

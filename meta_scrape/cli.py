@@ -1,14 +1,12 @@
 """Entry-point for metascrape."""
 import click
 
-from . import SCRAPER_MANAGER, SCRAPERS_DIRECTORY, VERSION, scrape
+from . import SCRAPER_MANAGER, SCRAPERS_DIRECTORY, scrape
 
 
 @click.group()
 def main():
     """Provide an entry point to the various metascrape sub-commands."""
-    click.echo(click.style("metascrape", fg="yellow") +
-               " - version {0}".format(VERSION) + "\n")
     SCRAPER_MANAGER.setPluginInfoExtension("plugin")
     SCRAPER_MANAGER.setPluginPlaces([SCRAPERS_DIRECTORY])
     SCRAPER_MANAGER.collectPlugins()

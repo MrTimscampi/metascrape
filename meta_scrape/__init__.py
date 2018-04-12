@@ -24,4 +24,4 @@ if not os.path.isfile(CONFIG_FILE):
 
 # Load configuration
 with open(CONFIG_FILE, 'r') as ymlfile:
-    CONFIG = yaml.load(ymlfile)
+    CONFIG = yaml.safe_load(ymlfile)

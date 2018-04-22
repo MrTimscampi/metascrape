@@ -75,10 +75,13 @@ def _merge_results(information):
     for field in CONFIG.get('priority'):
         for field_name, scraper_list in field.items():
             for scraper in scraper_list:
-                if information.get(scraper).get(field_name) is None:
+                if information.get(scraper) is None:
+                    # If the scraper didn't return any info, skip it
+                    continue
+                elif information.get(scraper).get(field_name) is None:
+                    # If the current field in the scraper doesn't have any info, skip it
                     continue
                 else:
-                    click.echo(information.get(scraper).get(field_name))
                     merged_information[field_name] = information.get(scraper).get(field_name)
     return merged_information
 

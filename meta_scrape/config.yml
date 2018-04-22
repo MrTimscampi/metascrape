@@ -1,17 +1,25 @@
 priority:
   - title:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - poster:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - actors:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - movie_format:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - release_date:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - maker:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - set:
     - EIC-Book/EIC-AV
+    - u15dvdinfo
   - plot:
     - EIC-Book/EIC-AV
+    - u15dvdinfo

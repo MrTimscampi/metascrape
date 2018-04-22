@@ -1,0 +1,9 @@
+[Core]
+Name = u15dvdinfo
+Module = u15dvdinfo
+
+[Documentation]
+Author = MrTimscampi
+Version = 0.1
+Website =
+Description = Scraper for the u15dvdinfo.com.

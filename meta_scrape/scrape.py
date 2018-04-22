@@ -48,10 +48,14 @@ def scrape(title, path):
                 for index, link in enumerate(search_results):
                     click.echo("  {0} - {1}\n      URL: {2}"
                                .format(index, link['title'], link['link']))
+                click.echo("  s - Skip to the next scraper")
                 value = click.prompt('Please enter the number '
                                      'of the link to use',
                                      default=0)
-                link = search_results[value]['link']
+                if value == 's':
+                    continue
+                else:
+                    link = search_results[value]['link']
             information[plugin.name] = plugin.plugin_object.get_movie_information(link)
         if information:
             merged_information = _merge_results(information)

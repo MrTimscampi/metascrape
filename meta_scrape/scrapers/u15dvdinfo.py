@@ -47,7 +47,7 @@ class U15DVDInfo(IPlugin):
         soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
 
         title_pre_clean = clean_title(soup.find("h1").get_text()).split(' | ')
-        title = title_pre_clean[0]
+        title = title_pre_clean[0] + " " + title_pre_clean[1]
         movie_format = title_pre_clean[2]
 
         try:

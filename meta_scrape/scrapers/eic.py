@@ -93,7 +93,11 @@ class EIC(IPlugin):
     def get_movie_information(link):
         """Scrape the movie page for information."""
         soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
-        title = clean_title(soup.find("div", {"id": "con20"}).find("h1").get_text())
+        try:
+            title = clean_title(soup.find("div", {"id": "con20"}).find("h1").get_text())
+        except AttributeError:
+            title = clean_title(soup.find("h1").get_text())
+
         try:
             poster = soup.find(class_="dtMainPic").get('href')
         except AttributeError:

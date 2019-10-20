@@ -3,6 +3,7 @@ from yapsy.IPlugin import IPlugin
 from bs4 import BeautifulSoup
 import urllib.request
 import urllib.parse
+import requests
 from meta_scrape.utils import clean_title
 
 
@@ -29,7 +30,7 @@ class EIC(IPlugin):
             return False
 
     def _search_eic_book(self, title):
-        soup = BeautifulSoup(urllib.request.urlopen(self.EIC_BOOK_SEARCH_URL +
+        soup = BeautifulSoup(requests.get(self.EIC_BOOK_SEARCH_URL +
                                                     urllib.parse.quote(title)),
                              "html.parser")
         result_list = soup.find_all("div", class_="list")
@@ -39,7 +40,7 @@ class EIC(IPlugin):
                 _title = clean_title(result.find("h2")
                                      .get_text()
                                      .split('\n', 1)[0])
-                soup = BeautifulSoup(urllib.request.urlopen(
+                soup = BeautifulSoup(requests.get(
                     self.EIC_BOOK_SEARCH_URL +
                     urllib.parse.quote(_title)),
                     "html.parser")
@@ -57,7 +58,7 @@ class EIC(IPlugin):
                 self.results.append({"title": result_title, "link": link})
 
     def _search_eic_av(self, title):
-        soup = BeautifulSoup(urllib.request.urlopen(self.EIC_AV_SEARCH_URL +
+        soup = BeautifulSoup(requests.get(self.EIC_AV_SEARCH_URL +
                                                     urllib.parse.quote(title)),
                              "html.parser")
         result_list = soup.find_all("div", class_="list")
@@ -67,7 +68,7 @@ class EIC(IPlugin):
                 _title = clean_title(result.find("h2")
                                      .get_text()
                                      .split('\n', 1)[0])
-                soup = BeautifulSoup(urllib.request.urlopen(
+                soup = BeautifulSoup(requests.get(
                     self.EIC_AV_SEARCH_URL +
                     urllib.parse.quote(_title)),
                     "html.parser")
@@ -92,7 +93,7 @@ class EIC(IPlugin):
     @staticmethod
     def get_movie_information(link):
         """Scrape the movie page for information."""
-        soup = BeautifulSoup(urllib.request.urlopen(link), "html.parser")
+        soup = BeautifulSoup(requests.get(link), "html.parser")
         try:
             title = clean_title(soup.find("div", {"id": "con20"}).find("h1").get_text())
         except AttributeError:

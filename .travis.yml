@@ -1,33 +1,28 @@
 matrix:
   include:
-    - python: "3.6"
-      env: TOXENV=py36
+    - python: "3.8"
+      env: TOXENV=flake8
       os: linux
       language: python
     - python: "3.6"
       env: TOXENV=py36
-      os: osx
-      language: generic
-    - python: "3.7-dev"
+      os: linux
+      language: python
+    - python: "3.7"
       env: TOXENV=py37
       os: linux
       language: python
-    - python: "3.6"
+    - python: "3.8"
+      env: TOXENV=py38
+      os: linux
+      language: python
+    - python: "3.8"
       env: TOXENV=cover
-      language: python
-  allow_failures:
-    - python: "3.7-dev"
-      env: TOXENV=py37
-      os: linux
       language: python
 
 addons:
   sonarcloud:
     organization: mrtimscampi-github
-
-before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade python; fi
 
 install:
   - pip3 install tox-travis coveralls

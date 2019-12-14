@@ -107,11 +107,12 @@ def _write_poster(information, path):
     cover = Image.open(io.BytesIO(urllib.request.urlopen(
         information.get("poster")).read()))
     cover_width, cover_height = cover.size
+
+    code = information.get("sorttitle")
+
     if cover_width > cover_height:
-        cover = crop_poster(cover)
-    else:
-        # This is already in the expected format
-        pass
+        cover = crop_poster(cover, cover_width, cover_height, code)
+
     click.echo("Writing poster...")
     cover.save(os.path.join(path, "folder.jpg"))
     cover.save(os.path.join(path, "poster.jpg"))

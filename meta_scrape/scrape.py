@@ -6,6 +6,7 @@ from xml.etree.cElementTree import Element, SubElement, ElementTree
 
 import click
 from PIL import Image
+import requests
 
 from meta_scrape import SCRAPER_MANAGER, CONFIG
 from meta_scrape.utils import crop_poster
@@ -105,9 +106,9 @@ def _write_poster(information, path, title):
     try:
         if not os.path.isfile(os.path.join(path, "poster.jpg")):
             click.echo("Writing poster...")
-            click.echo(information.get("poster"))
-            cover = Image.open(io.BytesIO(urllib.request.urlopen(
-                information.get("poster")).read()))
+            request = requests.get(information.get("poster"), stream=True)
+            request.raw.decode_content = True
+            cover = Image.open(request.raw)
             cover_width, cover_height = cover.size
 
             if cover_width > cover_height:
@@ -126,8 +127,9 @@ def _write_fanart(information, path):
     try:
         if not os.path.isfile(os.path.join(path, "fanart.jpg")):
             click.echo("Writing fanart...")
-            cover = Image.open(io.BytesIO(urllib.request.urlopen(
-                information.get("poster")).read()))
+            request = requests.get(information.get("poster"), stream=True)
+            request.raw.decode_content = True
+            cover = Image.open(request.raw)
             cover.save(os.path.join(path, "fanart.jpg"))
             cover.close()
         else:

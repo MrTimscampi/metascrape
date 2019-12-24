@@ -29,9 +29,9 @@ def crop_poster(image, cover_width, cover_height, code):
 
     # Handle inverted covers
     if ('DNPD' in code):
-        image = image.crop([0, 0, image_cropped_width, image_height])
+        return image.crop([0, 0, image_cropped_width, image_height])
     else:
-        image = image.crop([image_width - image_cropped_width, 0, image_width, image_height])
+        return image.crop([image_width - image_cropped_width, 0, image_width, image_height])
 
 
 def clean_title(title):

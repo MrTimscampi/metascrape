@@ -30,9 +30,8 @@ class EIC(IPlugin):
             return False
 
     def _search_eic_book(self, title):
-        soup = BeautifulSoup(requests.get(self.EIC_BOOK_SEARCH_URL +
-                                                    urllib.parse.quote(title)),
-                             "html.parser")
+        page = requests.get(self.EIC_BOOK_SEARCH_URL + urllib.parse.quote(title))
+        soup = BeautifulSoup(page.text, "html.parser")
         result_list = soup.find_all("div", class_="list")
         if self._has_multiple_formats(title):
             for result in result_list:
@@ -40,10 +39,8 @@ class EIC(IPlugin):
                 _title = clean_title(result.find("h2")
                                      .get_text()
                                      .split('\n', 1)[0])
-                soup = BeautifulSoup(requests.get(
-                    self.EIC_BOOK_SEARCH_URL +
-                    urllib.parse.quote(_title)),
-                    "html.parser")
+                page = requests.get(self.EIC_BOOK_SEARCH_URL + urllib.parse.quote(_title))
+                soup = BeautifulSoup(page.text, "html.parser")
                 for _result in soup.find_all("div", class_="list"):
                     result_title = _result.find("h2") \
                         .get_text().split('\n', 1)[0]
@@ -58,9 +55,8 @@ class EIC(IPlugin):
                 self.results.append({"title": result_title, "link": link})
 
     def _search_eic_av(self, title):
-        soup = BeautifulSoup(requests.get(self.EIC_AV_SEARCH_URL +
-                                                    urllib.parse.quote(title)),
-                             "html.parser")
+        page = requests.get(self.EIC_AV_SEARCH_URL + urllib.parse.quote(title))
+        soup = BeautifulSoup(page.text, "html.parser")
         result_list = soup.find_all("div", class_="list")
         if self._has_multiple_formats(title):
             for result in result_list:
@@ -93,7 +89,8 @@ class EIC(IPlugin):
     @staticmethod
     def get_movie_information(link):
         """Scrape the movie page for information."""
-        soup = BeautifulSoup(requests.get(link), "html.parser")
+        page = requests.get(link)
+        soup = BeautifulSoup(page.text, "html.parser")
         try:
             title = clean_title(soup.find("div", {"id": "con20"}).find("h1").get_text())
         except AttributeError:

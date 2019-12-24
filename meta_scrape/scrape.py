@@ -102,28 +102,35 @@ def _write_kodi_nfo(information, path):
 
 
 def _write_poster(information, path, title):
-    # TODO: Detect poster format
-    # TODO: Crop poster automatically
+    try:
+        if not os.path.isfile(os.path.join(path, "poster.jpg")):
+            click.echo("Writing poster...")
+            click.echo(information.get("poster"))
+            cover = Image.open(io.BytesIO(urllib.request.urlopen(
+                information.get("poster")).read()))
+            cover_width, cover_height = cover.size
 
-    click.echo("Writing poster...")
-    click.echo(information.get("poster"))
-    cover = Image.open(io.BytesIO(urllib.request.urlopen(
-        information.get("poster")).read()))
-    cover_width, cover_height = cover.size
+            if cover_width > cover_height:
+                cover = crop_poster(cover, cover_width, cover_height, title)
 
-    if cover_width > cover_height:
-        cover = crop_poster(cover, cover_width, cover_height, title)
-
-    cover.save(os.path.join(path, "folder.jpg"))
-    cover.save(os.path.join(path, "poster.jpg"))
-    cover.close()
+            cover.save(os.path.join(path, "poster.jpg"))
+            os.link(os.path.join(path, "poster.jpg"), os.path.join(path, "folder.jpg"))
+            cover.close()
+        else:
+            raise FileExistsError
+    except FileExistsError:
+        click.echo('Poster already exists, skipping')
 
 
 def _write_fanart(information, path):
-    # TODO: Detect fanart format
-    # TODO: Handle cases where fanart isn't the same source as poster
-    click.echo("Writing fanart...")
-    cover = Image.open(io.BytesIO(urllib.request.urlopen(
-        information.get("poster")).read()))
-    cover.save(os.path.join(path, "fanart.jpg"))
-    cover.close()
+    try:
+        if not os.path.isfile(os.path.join(path, "fanart.jpg")):
+            click.echo("Writing fanart...")
+            cover = Image.open(io.BytesIO(urllib.request.urlopen(
+                information.get("poster")).read()))
+            cover.save(os.path.join(path, "fanart.jpg"))
+            cover.close()
+        else:
+            raise FileExistsError
+    except FileExistsError:
+        click.echo('Fanart already exists, skipping')
